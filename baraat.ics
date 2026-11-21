@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ushna & Usama Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:baraat-ushna-usama-20261217@ushna-usama-wedding
+DTSTAMP:20261121T170000Z
+DTSTART:20261217T140000Z
+DTEND:20261217T180000Z
+SUMMARY:Baraat — Ushna & Usama
+DESCRIPTION:Baraat of Ushna Irfan (daughter of Mr. & Mrs. Irfan Ali) weds Usama Zia (son of Mr. & Mrs. Yousuf Zia). Hosted by Mr. & Mrs. Irfan Ali. Your presence will be our greatest blessing.
+LOCATION:Evention Marquee Multan\, Haans Plaza\, Bosan Road\, Near Shalimar\, Multan
+END:VEVENT
+END:VCALENDAR

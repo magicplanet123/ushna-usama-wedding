@@ -1,0 +1,15 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Ushna & Usama Wedding//EN
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+BEGIN:VEVENT
+UID:walima-usama-ushna-20261220@ushna-usama-wedding
+DTSTAMP:20261121T170000Z
+DTSTART:20261220T140000Z
+DTEND:20261220T180000Z
+SUMMARY:Walima — Usama & Ushna
+DESCRIPTION:Walima of Usama Zia (son of Mr. & Mrs. Yousuf Zia) weds Ushna Irfan (daughter of Mr. & Mrs. Irfan Ali). Hosted by Mr. & Mrs. Yousuf Zia. Your presence will be our greatest blessing.
+LOCATION:BJ Lawn Marriage Hall\, Education Avenue\, Near Shell Petrol Pump\, New Shalimar Colony\, Multan
+END:VEVENT
+END:VCALENDAR
