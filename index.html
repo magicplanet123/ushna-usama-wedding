@@ -312,15 +312,20 @@
         <textarea id="rsvpMessage" name="message" rows="4" placeholder="Your wishes, blessings and warm words…"></textarea>
       </div>
       <p class="form-error" id="formError" hidden>Please add your name and choose which celebration you will attend.</p>
-      <button type="submit" class="btn btn-gold btn-wide">Send RSVP</button>
-      <p class="form-note">Your RSVP is saved on this device. If you would like to share it with the families, use the email option shown after submitting.</p>
+      <p class="form-error" id="sendError" hidden>We couldn&rsquo;t send your RSVP just now. It is saved on this device — please try sending again, or use the email option below.</p>
+      <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input type="hidden" name="_subject" value="New RSVP — Ushna & Usama Wedding">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_captcha" value="false">
+      <button type="submit" class="btn btn-gold btn-wide" id="rsvpSubmit">Send RSVP</button>
+      <p class="form-note">Your RSVP is sent straight to the families — you don&rsquo;t need to enter any email address.</p>
     </form>
     <div class="rsvp-success" id="rsvpSuccess" hidden>
       <p class="success-mark" aria-hidden="true">✦</p>
       <h3>Thank You!</h3>
       <p id="successText">Your RSVP has been received with joy. We look forward to celebrating with you in Multan.</p>
       <p class="success-detail" id="successDetail"></p>
-      <a class="btn btn-gold" id="mailtoBtn" href="#">Share RSVP by Email</a>
+      <a class="btn btn-gold" id="mailtoBtn" href="#" hidden>Share RSVP by Email Instead</a>
       <button class="btn btn-ghost" id="rsvpAgain" type="button">Send Another RSVP</button>
     </div>
   </div>

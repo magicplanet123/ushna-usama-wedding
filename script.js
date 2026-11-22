@@ -135,6 +135,41 @@
   var mailtoBtn = document.getElementById('mailtoBtn');
   var rsvpAgain = document.getElementById('rsvpAgain');
 
+  var submitBtn = document.getElementById('rsvpSubmit');
+  var sendError = document.getElementById('sendError');
+
+  /* RSVPs are sent automatically to the families at isuya01@gmail.com
+     (FormSubmit — no account, no email address needed from the guest).
+     The first submission triggers a one-time activation email to that
+     inbox; until it is confirmed, FormSubmit holds new RSVPs. */
+  var RSVP_ENDPOINT = 'https://formsubmit.co/ajax/isuya01@gmail.com';
+
+  function showRsvpResult(name, attending, guests, message, sent) {
+    if (sent) {
+      successText.textContent = 'Thank you, ' + name + '! Your RSVP has been sent to the families. We look forward to celebrating with you in Multan.';
+      if (mailtoBtn) mailtoBtn.hidden = true;
+      if (sendError) sendError.hidden = true;
+    } else {
+      successText.textContent = 'Thank you, ' + name + '! Your RSVP is saved on this device, but it did not reach the families yet — please tap below to send it by email instead.';
+      if (mailtoBtn) mailtoBtn.hidden = false;
+      if (sendError) sendError.hidden = false;
+    }
+    successDetail.textContent = attending.value + '  •  ' + guests + (guests === '1' ? ' guest' : ' guests') +
+      (message ? '  •  “' + message + '”' : '');
+    var subject = encodeURIComponent('RSVP — Ushna & Usama Wedding — ' + name);
+    var body = encodeURIComponent(
+      'RSVP for the wedding of Ushna Irfan & Usama Zia\n\n' +
+      'Name: ' + name + '\nAttending: ' + attending.value + '\nGuests: ' + guests +
+      (message ? '\nMessage: ' + message : '') +
+      '\n\nBaraat — Thursday 17 December 2026, 7:00 PM, Evention Marquee Multan\n' +
+      'Walima — Sunday 20 December 2026, 7:00 PM, BJ Lawn Marriage Hall, Multan'
+    );
+    mailtoBtn.href = 'mailto:isuya01@gmail.com?subject=' + subject + '&body=' + body;
+    form.hidden = true;
+    success.hidden = false;
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   if (form) {
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -148,6 +183,7 @@
         return;
       }
       if (formError) formError.hidden = true;
+      if (sendError) sendError.hidden = true;
       var rsvp = {
         name: name, attending: attending.value, guests: guests, message: message,
         submittedAt: new Date().toISOString(), event: 'Ushna & Usama Wedding — Multan, December 2026'
@@ -158,21 +194,23 @@
         localStorage.setItem('ushna-usama-rsvps', JSON.stringify(all));
         localStorage.setItem('ushna-usama-rsvp-latest', JSON.stringify(rsvp));
       } catch (err) { /* private mode: confirmation still shows */ }
-      successText.textContent = 'Thank you, ' + name + '! Your RSVP has been received with joy. We look forward to celebrating with you in Multan.';
-      successDetail.textContent = attending.value + '  •  ' + guests + (guests === '1' ? ' guest' : ' guests') +
-        (message ? '  •  “' + message + '”' : '');
-      var subject = encodeURIComponent('RSVP — Ushna & Usama Wedding — ' + name);
-      var body = encodeURIComponent(
-        'RSVP for the wedding of Ushna Irfan & Usama Zia\n\n' +
-        'Name: ' + name + '\nAttending: ' + attending.value + '\nGuests: ' + guests +
-        (message ? '\nMessage: ' + message : '') +
-        '\n\nBaraat — Thursday 17 December 2026, 7:00 PM, Evention Marquee Multan\n' +
-        'Walima — Sunday 20 December 2026, 7:00 PM, BJ Lawn Marriage Hall, Multan'
-      );
-      mailtoBtn.href = 'mailto:?subject=' + subject + '&body=' + body;
-      form.hidden = true;
-      success.hidden = false;
-      success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending…'; }
+      var fd = new FormData(form);
+      fd.set('_subject', 'New RSVP — Ushna & Usama Wedding');
+      fd.set('_template', 'table');
+      fd.set('_captcha', 'false');
+      var done = false;
+      function finish(sent) {
+        if (done) return;
+        done = true;
+        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send RSVP'; }
+        showRsvpResult(name, attending, guests, message, sent);
+      }
+      setTimeout(function () { finish(false); }, 12000); // give up after 12s, keep the mailto fallback
+      fetch(RSVP_ENDPOINT, { method: 'POST', body: fd, headers: { 'Accept': 'application/json' } })
+        .then(function (res) { return res.json().catch(function () { return {}; }); })
+        .then(function (data) { finish(data && (data.success === 'true' || data.success === true)); })
+        .catch(function () { finish(false); });
     });
   }
   if (rsvpAgain) {

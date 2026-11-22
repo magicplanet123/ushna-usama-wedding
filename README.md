@@ -43,7 +43,7 @@ ushna-usama-wedding/
 - **Timeline** — Baraat Thu 17 Dec → Walima Sun 20 Dec
 - **Invitations gallery** — all three original cards, click to open full-size lightbox
 - **Dress code / Good to know** — emerald/gold for Baraat, ivory/maroon/gold for Walima; arrive by 7 PM; photography welcome; December evenings in Multan are cool — bring a shawl/jacket
-- **RSVP form** — name, Baraat / Walima / Both / Regretfully can't attend, guest count, message. Saves to `localStorage` (key `ushna-usama-rsvps`), shows a confirmation, and offers a mailto fallback. No phone, WhatsApp or email address is invented or shown for RSVP.
+- **RSVP form** — name, Baraat / Walima / Both / Regretfully can't attend, guest count, message. On submit it is sent automatically to the families at **isuya01@gmail.com** via FormSubmit (`https://formsubmit.co/ajax/isuya01@gmail.com`) — the guest never enters an email address. A copy is also saved in the guest's browser (`localStorage`, key `ushna-usama-rsvps`). If the send fails, the confirmation offers a mailto fallback to isuya01@gmail.com. **One-time activation required:** the first RSVP triggers a confirmation email from FormSubmit to isuya01@gmail.com — click the activation link in it once, and all RSVPs after that arrive automatically.
 - **Footer** — Ushna • Usama, Bismillah line, "Your presence will be our greatest blessing."
 
 ## Deploy to Vercel
